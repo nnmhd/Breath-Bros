@@ -1,0 +1,45 @@
+* {
+    font-family: sans-serif;
+}
+
+#header {
+    place-items: center;
+    height: 5rem;
+    background-color: rgb(253 224 71);
+    margin-bottom: 1rem;
+    border-radius: 10px;
+}
+
+#logo {
+    width: 3rem;
+}
+
+#breath-practice {
+    background-color: rgb(253 224 71);
+    border-radius: 10px;
+    padding: 1rem;
+}
+
+#smiley {
+    height: 45vh;
+    max-height: 60vh;
+    border-radius: 10px;
+}
+
+.button {
+    background-color: snow;
+    font-weight: 900;
+    font-size: 1.2rem; 
+    width: 5rem;
+    height: 5rem;
+    border-radius: 50px;
+    border-style: hidden;
+}
+
+#footer {
+    text-align: center;
+    margin-top: 1rem;
+    height: 2rem;
+    background-color: bisque;
+    border-radius: 10px;
+}
