@@ -1,45 +1,344 @@
+/* CSS Main Outline
+
+1-Header Section
+2-Main Body Section
+3-Control Section
+4-Footer Section
+5-Keyframes
+    -Heartbeat
+    -Practice
+6-Responsive
+    -Tablet 
+    -Mobile
+*/
+
 * {
-    font-family: sans-serif;
+  font-family: sans-serif;
+}
+
+/* 1- Header Section  */
+body {
+  max-width: 1920px;
+  margin: 0 auto;
+  background-color: palevioletred;
 }
 
 #header {
-    place-items: center;
-    height: 5rem;
-    background-color: rgb(253 224 71);
-    margin-bottom: 1rem;
-    border-radius: 10px;
+  height: 20vh;
 }
 
-#logo {
-    width: 3rem;
+#header-box {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  border: 0.5rem #0c0c0c solid;
+  border-top: 0;
+  overflow: hidden;
 }
 
+#logo-box {
+  display: grid;
+  place-items: center;
+  border-right: 0.5rem #0c0c0c solid;
+  background: linear-gradient(60deg, rgba(255, 152, 0, 1), rgba(0, 0, 0, 0)),
+    url("data:image/svg+xml,%3Csvg viewBox='0 0 250 250' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='noiseFilter'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.65' numOctaves='3' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23noiseFilter)'/%3E%3C/svg%3E");
+}
+
+.logo {
+  width: 350px;
+  transform: rotate(-30deg) translateY(-10%) translateX(30%);
+  transition: all 0.2s ease-in-out;
+}
+
+.ready {
+  width: 150px;
+  transform: rotate(0);
+}
+
+#quotes {
+  position: relative;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  background-color: green;
+}
+
+#quotes div {
+  position: absolute;
+}
+
+.text {
+  width: 100%;
+  font-size: 9rem;
+  text-align: center;
+  font-weight: 100;
+  line-height: 6rem;
+  text-overflow: clip;
+  color: snow;
+  opacity: 0;
+}
+
+/* 2-Main Body Section */
 #breath-practice {
-    background-color: rgb(253 224 71);
-    border-radius: 10px;
-    padding: 1rem;
+  border: 0.5rem #0c0c0c solid;
+  border-top: 0;
+}
+
+#Practice {
+  display: grid;
+  grid-template-columns: repeat(6, 1fr);
+}
+
+#smileyBox {
+  display: grid;
+  place-items: center;
+  background-color: rgb(253 224 71);
+  height: 60vh;
+  max-height: 60vh;
+  overflow: hidden;
+  border-right: 0.5rem #0c0c0c solid;
+  filter: contrast(1000%) brightness(150%);
+  background: radial-gradient(
+      circle at 49% -50%,
+      rgba(253, 224, 71, 1),
+      rgba(220, 23, 23, 0)
+    ),
+    radial-gradient(
+      circle at 51% 142%,
+      rgba(94, 94, 90, 1),
+      rgba(255, 0, 255, 0)
+    ),
+    url("data:image/svg+xml,%3Csvg viewBox='0 0 400 400' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='noiseFilter'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='10' numOctaves='1' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23noiseFilter)'/%3E%3C/svg%3E");
 }
 
 #smiley {
-    height: 45vh;
-    max-height: 60vh;
-    border-radius: 10px;
+  width: 25%;
+  overflow: visible;
+}
+
+#heartBody {
+  transform: scale(1);
+  transform-origin: center;
+}
+
+.heartFace {
+  transform-origin: center;
+}
+
+#logo-eyes {
+  transform-origin: center;
+}
+
+/* 3- Controller Section */
+#controller {
+  display: grid;
+  place-items: center;
+  background-color: skyblue;
 }
 
 .button {
-    background-color: snow;
-    font-weight: 900;
-    font-size: 1.2rem; 
-    width: 5rem;
-    height: 5rem;
-    border-radius: 50px;
-    border-style: hidden;
+  width: 100%;
+  height: 100%;
+  background-color: snow;
+  font-weight: 900;
+  font-size: 10rem;
+  color: #0c0c0c;
+  border-style: hidden;
+  border-radius: 20rem;
+  transition: all 0.5s ease-in-out;
 }
 
+.button:hover {
+  width: 80%;
+  height: 80%;
+  font-size: 10.5rem;
+}
+
+/* 4- Footer Section */
 #footer {
-    text-align: center;
-    margin-top: 1rem;
-    height: 2rem;
-    background-color: bisque;
-    border-radius: 10px;
+  height: 20vh;
+  display: grid;
+  place-items: center;
+  border: 0.5rem #0c0c0c solid;
+  border-top: 0;
+  border-bottom: 0;
+  text-align: center;
+  background-color: bisque;
+}
+
+#credit {
+  width: 100%;
+  font-family: sans-serif;
+  font-size: 6rem;
+  font-weight: 900;
+  overflow: hidden;
+  white-space: nowrap;
+  text-overflow: ellipsis;
+}
+
+/* Keyframes */
+
+.heartBeat {
+  animation: heartBeat 3s ease-in infinite;
+}
+
+.practice {
+  animation: practice 6s ease-in-out 3s infinite;
+}
+
+.practiceSmileyFace {
+  animation: practice-smiley-face 6s ease-in-out 3s infinite;
+}
+
+.logoBreathing {
+  animation: logoBreathing 6s ease-in-out 3s infinite;
+}
+
+.logoBreathingY {
+  animation: logoBreathingY 6s ease-in-out 3s infinite;
+}
+
+.textReady {
+  animation: textReady 3s ease-in 1;
+}
+
+.breathIn {
+  animation: breathIn 6s ease-in-out 3s infinite;
+}
+
+.breathOut {
+  animation: breathOut 6s ease-in-out 3s infinite;
+}
+
+.boxColorChanging {
+  animation: boxColorChanging 6s ease-in-out 3s infinite;
+}
+
+@keyframes heartBeat {
+  0% {
+    transform: scale(1);
+  }
+
+  40%,
+  50%,
+  60% {
+    transform: scale(1);
+  }
+
+  45%,
+  55% {
+    transform: scale(1.2);
+  }
+}
+
+@keyframes practice {
+  0%,
+  100% {
+    transform: scale(1);
+  }
+
+  20%,
+  30% {
+    transform: scale(10);
+  }
+
+  70%,
+  80% {
+    transform: scale(0.9);
+  }
+}
+
+@keyframes practice-smiley-face {
+  0%,
+  100% {
+    transform: scale(1);
+  }
+
+  20%,
+  30% {
+    transform: scale(0.6);
+  }
+
+  70%,
+  80% {
+    transform: scale(0.9);
+  }
+}
+
+/* -Logo Animation */
+
+@keyframes logoBreathing {
+  0%,
+  100% {
+    transform: scaleY(1);
+  }
+
+  30% {
+    transform: scaleY(0.2);
+  }
+}
+
+@keyframes logoBreathingY {
+  0%,
+  100% {
+    transform: translateY(0);
+  }
+
+  30% {
+    transform: translateY(-5%);
+  }
+}
+
+/* -Text Animation */
+
+@keyframes textReady {
+  0%,
+  100% {
+    opacity: 0;
+  }
+
+  30% {
+    opacity: 1;
+  }
+}
+
+@keyframes breathIn {
+  0%,
+  50% {
+    opacity: 0;
+  }
+
+  25% {
+    opacity: 1;
+  }
+}
+
+@keyframes breathOut {
+  0%,
+  50% {
+    opacity: 0;
+  }
+  60%,
+  70% {
+    opacity: 1;
+  }
+}
+
+/* -Controller Animation */
+
+@keyframes boxColorChanging {
+  0% {
+    background-color: skyblue;
+  }
+
+  30% {
+    background-color: white;
+  }
+}
+
+/*  */
+
+@media screen and (max-width: 1024px) {
+  .text {
+    font-size: 6rem;
+  }
 }
