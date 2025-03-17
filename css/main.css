@@ -19,32 +19,36 @@
 /* 1- Header Section  */
 body {
   max-width: 1920px;
+  max-height: 100vh;
+  overflow: hidden;
   margin: 0 auto;
   background-color: palevioletred;
 }
 
 #header {
-  height: 20vh;
+  height: 15vh;
 }
 
 #header-box {
+  height: 100%;
   display: grid;
   grid-template-columns: 1fr 1fr;
   border: 0.5rem #0c0c0c solid;
-  border-top: 0;
   overflow: hidden;
 }
 
 #logo-box {
+  width: 100%;
   display: grid;
   place-items: center;
   border-right: 0.5rem #0c0c0c solid;
+  overflow: hidden;
   background: linear-gradient(60deg, rgba(255, 152, 0, 1), rgba(0, 0, 0, 0)),
     url("data:image/svg+xml,%3Csvg viewBox='0 0 250 250' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='noiseFilter'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.65' numOctaves='3' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23noiseFilter)'/%3E%3C/svg%3E");
 }
 
 .logo {
-  width: 350px;
+  width: 200px;
   transform: rotate(-30deg) translateY(-10%) translateX(30%);
   transition: all 0.2s ease-in-out;
 }
@@ -54,7 +58,7 @@ body {
   transform: rotate(0);
 }
 
-#quotes {
+#breathingStep {
   position: relative;
   display: flex;
   justify-content: center;
@@ -62,7 +66,7 @@ body {
   background-color: green;
 }
 
-#quotes div {
+#breathing div {
   position: absolute;
 }
 
@@ -79,23 +83,26 @@ body {
 
 /* 2-Main Body Section */
 #breath-practice {
+  height: 65vh;
   border: 0.5rem #0c0c0c solid;
   border-top: 0;
+  z-index: 999;
 }
 
-#Practice {
+#practice {
   display: grid;
   grid-template-columns: repeat(6, 1fr);
 }
 
 #smileyBox {
   display: grid;
+  grid-column: 1/-1;
   place-items: center;
   background-color: rgb(253 224 71);
-  height: 60vh;
+  height: 40vh;
   max-height: 60vh;
   overflow: hidden;
-  border-right: 0.5rem #0c0c0c solid;
+  /* border-right: 0.5rem #0c0c0c solid; */
   filter: contrast(1000%) brightness(150%);
   background: radial-gradient(
       circle at 49% -50%,
@@ -131,11 +138,16 @@ body {
 /* 3- Controller Section */
 #controller {
   display: grid;
+  grid-column: 1/-1;
+  height: 25vh;
+  border-top: #0c0c0c solid 0.5rem;
+  border-bottom: #0c0c0c solid 0.5rem;
   place-items: center;
   background-color: skyblue;
+  cursor: pointer;
 }
 
-.button {
+#playStop {
   width: 100%;
   height: 100%;
   background-color: snow;
@@ -145,34 +157,710 @@ body {
   border-style: hidden;
   border-radius: 20rem;
   transition: all 0.5s ease-in-out;
+  cursor: pointer;
 }
 
-.button:hover {
+#controller:hover #playStop {
   width: 80%;
-  height: 80%;
+  height: 100%;
   font-size: 10.5rem;
 }
 
-/* 4- Footer Section */
-#footer {
+/* 4- Mode Section */
+#modeCon {
   height: 20vh;
   display: grid;
   place-items: center;
   border: 0.5rem #0c0c0c solid;
   border-top: 0;
-  border-bottom: 0;
+  border-bottom: #0c0c0c solid 0.5rem;
   text-align: center;
   background-color: bisque;
+  z-index: 111;
 }
 
-#credit {
+#modeName {
+  position: relative;
   width: 100%;
+  font-family: sans-serif;
+  font-size: 3.5rem;
+  font-weight: 900;
+  cursor: pointer;
+}
+
+#modeName ul {
+  position: absolute;
+  top: calc(-50vh - 36px);
+  left: 0;
+  width: 100%;
+  height: 50vh;
+  z-index: 99999;
+  text-decoration: none;
+  list-style-type: none;
+  display: flex;
+  flex-direction: column;
+  /* overflow: hidden; */
+  transform: translateY(200vh);
+  opacity: 0;
+  transition: transform 0.2s ease-in-out, opacity 0.2s ease-in-out;
+}
+
+#modeName ul.show {
+  transform: translateY(0);
+  opacity: 1;
+}
+
+#modeName ul li {
+  display: grid;
+  place-items: center;
+  width: 100%;
+  height: 100%;
+  background-color: blueviolet;
+  outline: 0.5rem #0c0c0c solid;
+  color: whitesmoke;
+  padding: 0;
+  cursor: pointer;
+  font-weight: 400;
+}
+
+#modeName ul li:hover {
+  background-color: darkblue;
+}
+
+#mins {
+  width: 100%;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  align-items: center;
+  height: 100%;
   font-family: sans-serif;
   font-size: 6rem;
   font-weight: 900;
   overflow: hidden;
   white-space: nowrap;
   text-overflow: ellipsis;
+  border-right: 0.5rem #0c0c0c solid;
+  background-color: salmon;
+}
+
+#minsNum {
+  width: 100%;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  padding: 15% 0 0 0;
+}
+
+#mins input::-webkit-inner-spin-button,
+#mins input::-webkit-outer-spin-button {
+  -webkit-appearance: none;
+  margin: 0;
+}
+
+#mins input {
+  display: flex;
+  font-size: 3.5rem;
+  font-weight: 600;
+  width: 5rem;
+  height: 4rem;
+  text-align: center;
+  background-color: transparent;
+  border: none;
+  outline: none;
+  appearance: textfield;
+}
+#mins i {
+  font-size: 2rem;
+}
+#mins button {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  font-size: 3rem;
+  height: 120px;
+  color: #0c0c0c;
+  background-color: transparent;
+  border: none;
+  outline: none;
+  cursor: pointer;
+}
+
+#mins button:hover {
+  color: #0c0c0c;
+}
+
+#minsCOn {
+  border-top: #0c0c0c solid 0.5rem;
+  width: 100%;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  background-color: whitesmoke;
+  padding: 0 16px;
+}
+
+@media screen and (min-width: 512px) and (max-width: 1023px) {
+  /* 1- Header Section  */
+  body {
+    max-width: 1920px;
+    max-height: 100vh;
+    overflow: hidden;
+    margin: 0 auto;
+    background-color: palevioletred;
+  }
+
+  #header {
+    height: 15vh;
+  }
+
+  #header-box {
+    height: 100%;
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    border: 0.5rem #0c0c0c solid;
+    overflow: hidden;
+  }
+
+  #logo-box {
+    width: 100%;
+    display: grid;
+    place-items: center;
+    border-right: 0.5rem #0c0c0c solid;
+    overflow: hidden;
+    background: linear-gradient(60deg, rgba(255, 152, 0, 1), rgba(0, 0, 0, 0)),
+      url("data:image/svg+xml,%3Csvg viewBox='0 0 250 250' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='noiseFilter'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.65' numOctaves='3' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23noiseFilter)'/%3E%3C/svg%3E");
+  }
+
+  .logo {
+    width: 200px;
+    transform: rotate(-30deg) translateY(-10%) translateX(30%);
+    transition: all 0.2s ease-in-out;
+  }
+
+  .ready {
+    width: 150px;
+    transform: rotate(0);
+  }
+
+  #breathingStep {
+    position: relative;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    background-color: green;
+  }
+
+  #breathing div {
+    position: absolute;
+  }
+
+  .text {
+    width: 100%;
+    font-size: 9rem;
+    text-align: center;
+    font-weight: 100;
+    line-height: 6rem;
+    text-overflow: clip;
+    color: snow;
+    opacity: 0;
+  }
+
+  /* 2-Main Body Section */
+  #breath-practice {
+    height: 65vh;
+    border: 0.5rem #0c0c0c solid;
+    border-top: 0;
+    z-index: 999;
+  }
+
+  #practice {
+    display: grid;
+    grid-template-columns: repeat(6, 1fr);
+  }
+
+  #smileyBox {
+    display: grid;
+    grid-column: 1/-1;
+    place-items: center;
+    background-color: rgb(253 224 71);
+    height: 40vh;
+    max-height: 60vh;
+    overflow: hidden;
+    /* border-right: 0.5rem #0c0c0c solid; */
+    filter: contrast(1000%) brightness(150%);
+    background: radial-gradient(
+        circle at 49% -50%,
+        rgba(253, 224, 71, 1),
+        rgba(220, 23, 23, 0)
+      ),
+      radial-gradient(
+        circle at 51% 142%,
+        rgba(94, 94, 90, 1),
+        rgba(255, 0, 255, 0)
+      ),
+      url("data:image/svg+xml,%3Csvg viewBox='0 0 400 400' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='noiseFilter'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='10' numOctaves='1' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23noiseFilter)'/%3E%3C/svg%3E");
+  }
+
+  #smiley {
+    width: 25%;
+    overflow: visible;
+  }
+
+  #heartBody {
+    transform: scale(1);
+    transform-origin: center;
+  }
+
+  .heartFace {
+    transform-origin: center;
+  }
+
+  #logo-eyes {
+    transform-origin: center;
+  }
+
+  /* 3- Controller Section */
+  #controller {
+    display: grid;
+    grid-column: 1/-1;
+    height: 25vh;
+    border-top: #0c0c0c solid 0.5rem;
+    border-bottom: #0c0c0c solid 0.5rem;
+    place-items: center;
+    background-color: skyblue;
+    cursor: pointer;
+  }
+
+  #playStop {
+    width: 100%;
+    height: 100%;
+    background-color: snow;
+    font-weight: 900;
+    font-size: 10rem;
+    color: #0c0c0c;
+    border-style: hidden;
+    border-radius: 20rem;
+    transition: all 0.5s ease-in-out;
+    cursor: pointer;
+  }
+
+  #controller:hover #playStop {
+    width: 80%;
+    height: 100%;
+    font-size: 10.5rem;
+  }
+
+  /* 4- Mode Section */
+  #modeCon {
+    height: 20vh;
+    display: grid;
+    place-items: center;
+    border: 0.5rem #0c0c0c solid;
+    border-top: 0;
+    border-bottom: #0c0c0c solid 0.5rem;
+    text-align: center;
+    background-color: bisque;
+    z-index: 111;
+  }
+
+  #modeName {
+    position: relative;
+    width: 100%;
+    font-family: sans-serif;
+    font-size: 3.5rem;
+    font-weight: 900;
+    cursor: pointer;
+  }
+
+  #modeName ul {
+    position: absolute;
+    /* top: calc(-55vh - 32px); */
+    bottom: calc(-20vh * -0.5);
+    left: 0;
+    width: 100%;
+    height: 50vh;
+    z-index: 99999;
+    text-decoration: none;
+    list-style-type: none;
+    display: flex;
+    flex-direction: column;
+    /* overflow: hidden; */
+    transform: translateY(200vh);
+    opacity: 0;
+    transition: transform 0.2s ease-in-out, opacity 0.2s ease-in-out;
+  }
+
+  #modeName ul.show {
+    transform: translateY(0);
+    opacity: 1;
+  }
+
+  #modeName ul li {
+    display: grid;
+    place-items: center;
+    width: 100%;
+    height: 100%;
+    background-color: blueviolet;
+    outline: 0.5rem #0c0c0c solid;
+    color: whitesmoke;
+    padding: 0;
+    cursor: pointer;
+    font-weight: 400;
+  }
+
+  #modeName ul li:hover {
+    background-color: darkblue;
+  }
+
+  #mins {
+    width: 100%;
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+    align-items: center;
+    height: 100%;
+    font-family: sans-serif;
+    font-size: 6rem;
+    font-weight: 900;
+    overflow: hidden;
+    white-space: nowrap;
+    text-overflow: ellipsis;
+    border-right: 0.5rem #0c0c0c solid;
+    background-color: salmon;
+  }
+
+  #minsNum {
+    width: 100%;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    padding: 15% 0 0 0;
+    margin-top: 1.5rem;
+  }
+
+  #mins input::-webkit-inner-spin-button,
+  #mins input::-webkit-outer-spin-button {
+    -webkit-appearance: none;
+    margin: 0;
+  }
+
+  #mins input {
+    display: flex;
+    font-size: 4rem;
+    font-weight: 600;
+    width: 5rem;
+    height: 4rem;
+    text-align: center;
+    background-color: transparent;
+    border: none;
+    outline: none;
+    appearance: textfield;
+  }
+  #mins i {
+    font-size: 2rem;
+  }
+  #mins button {
+    font-size: 3rem;
+    height: 120px;
+    color: #0c0c0c;
+    background-color: transparent;
+    border: none;
+    outline: none;
+    cursor: pointer;
+    margin-inline: 16px;
+  }
+
+  #mins button:hover {
+    color: #0c0c0c;
+  }
+
+  #minsCOn {
+    border-top: #0c0c0c solid 0.5rem;
+    width: 100%;
+    display: flex;
+    justify-content: space-between;
+    background-color: whitesmoke;
+    padding: 0 16px;
+  }
+}
+
+@media screen and (min-width: 1024px) {
+  .text {
+    font-size: 6rem;
+  }
+  /* 1- Header Section  */
+  body {
+    max-width: 1920px;
+    max-height: 100vh;
+    overflow: hidden;
+    margin: 0 auto;
+    background-color: palevioletred;
+  }
+
+  #header {
+    height: 20vh;
+  }
+
+  #header-box {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    border: 0.5rem #0c0c0c solid;
+    border-top: 0;
+    overflow: hidden;
+  }
+
+  #logo-box {
+    display: grid;
+    place-items: center;
+    border-right: 0.5rem #0c0c0c solid;
+    background: linear-gradient(60deg, rgba(255, 152, 0, 1), rgba(0, 0, 0, 0)),
+      url("data:image/svg+xml,%3Csvg viewBox='0 0 250 250' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='noiseFilter'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.65' numOctaves='3' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23noiseFilter)'/%3E%3C/svg%3E");
+  }
+
+  .logo {
+    width: 350px;
+    transform: rotate(-30deg) translateY(-10%) translateX(30%);
+    transition: all 0.2s ease-in-out;
+  }
+
+  .ready {
+    width: 150px;
+    transform: rotate(0);
+  }
+
+  #breathingStep {
+    position: relative;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    background-color: green;
+  }
+
+  #breathing div {
+    position: absolute;
+  }
+
+  .text {
+    width: 100%;
+    font-size: 9rem;
+    text-align: center;
+    font-weight: 100;
+    line-height: 6rem;
+    text-overflow: clip;
+    color: snow;
+    opacity: 0;
+  }
+
+  /* 2-Main Body Section */
+  #breath-practice {
+    height: 60vh;
+    border: 0.5rem #0c0c0c solid;
+    border-top: 0;
+    z-index: 999;
+  }
+
+  #practice {
+    height: 100%;
+    display: grid;
+    grid-template-columns: repeat(6, 1fr);
+  }
+
+  #smileyBox {
+    display: grid;
+    grid-column: 1/5;
+    place-items: center;
+    background-color: rgb(253 224 71);
+    height: 100%;
+    border-right: #0c0c0c solid 0.5rem;
+    overflow: hidden;
+    filter: contrast(1000%) brightness(150%);
+    background: radial-gradient(
+        circle at 49% -50%,
+        rgba(253, 224, 71, 1),
+        rgba(220, 23, 23, 0)
+      ),
+      radial-gradient(
+        circle at 51% 142%,
+        rgba(94, 94, 90, 1),
+        rgba(255, 0, 255, 0)
+      ),
+      url("data:image/svg+xml,%3Csvg viewBox='0 0 400 400' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='noiseFilter'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='10' numOctaves='1' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23noiseFilter)'/%3E%3C/svg%3E");
+  }
+
+  #smiley {
+    width: 25%;
+    overflow: visible;
+  }
+
+  #heartBody {
+    transform: scale(1);
+    transform-origin: center;
+  }
+
+  .heartFace {
+    transform-origin: center;
+  }
+
+  #logo-eyes {
+    transform-origin: center;
+  }
+
+  /* 3- Controller Section */
+  #controller {
+    display: grid;
+    grid-column: 5/8;
+    height: 100%;
+    border: none;
+    place-items: center;
+    background-color: skyblue;
+    cursor: pointer;
+  }
+
+  #playStop {
+    width: 100%;
+    height: 100%;
+    background-color: snow;
+    font-weight: 900;
+    font-size: 10rem;
+    color: #0c0c0c;
+    border-style: hidden;
+    border-radius: 20rem;
+    transition: all 0.5s ease-in-out;
+    cursor: pointer;
+  }
+
+  #controller:hover #playStop {
+    width: 80%;
+    height: 60%;
+    font-size: 10.5rem;
+  }
+  /* 4- Mode Section */
+  #modeCon {
+    height: 20vh;
+    display: grid;
+    place-items: center;
+    border: 0.5rem #0c0c0c solid;
+    border-top: 0;
+    border-bottom: 0;
+    text-align: center;
+    background-color: bisque;
+  }
+
+  #modeName {
+    position: relative;
+    width: 100%;
+    font-family: sans-serif;
+    font-size: 6rem;
+    font-weight: 900;
+    cursor: pointer;
+  }
+
+  #modeName ul {
+    position: absolute;
+    top: calc(-55vh - 2rem);
+    left: 0;
+    width: 100%;
+    height: 50vh;
+    z-index: 99999;
+    text-decoration: none;
+    list-style-type: none;
+    display: flex;
+    flex-direction: column;
+    /* overflow: hidden; */
+    transform: translateY(200vh);
+    opacity: 0;
+    transition: transform 0.2s ease-in-out, opacity 0.2s ease-in-out;
+  }
+
+  #modeName ul.show {
+    transform: translateY(0);
+    opacity: 1;
+  }
+
+  #modeName ul li {
+    display: grid;
+    place-items: center;
+    width: 100%;
+    height: 100%;
+    background-color: blueviolet;
+    outline: 0.5rem #0c0c0c solid;
+    color: whitesmoke;
+    padding: 0;
+    cursor: pointer;
+    font-weight: 400;
+  }
+
+  #modeName ul li:hover {
+    background-color: darkblue;
+  }
+
+  #mins {
+    width: 100%;
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+    align-items: center;
+    height: 100%;
+    font-family: sans-serif;
+    font-size: 6rem;
+    font-weight: 900;
+    overflow: hidden;
+    white-space: nowrap;
+    text-overflow: ellipsis;
+    border-right: 0.5rem #0c0c0c solid;
+    background-color: salmon;
+  }
+
+  #minsNum {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    padding-top: 36px;
+  }
+
+  #mins input::-webkit-inner-spin-button,
+  #mins input::-webkit-outer-spin-button {
+    -webkit-appearance: none;
+    margin: 0;
+  }
+
+  #mins input {
+    font-size: 7rem;
+    font-weight: 600;
+    width: 8rem;
+    height: 8rem;
+    text-align: center;
+    background-color: transparent;
+    border: none;
+    outline: none;
+    appearance: textfield;
+  }
+  #mins i {
+    font-size: 3rem;
+  }
+  #mins button {
+    font-size: 6rem;
+    color: #0c0c0c;
+    background-color: transparent;
+    border: none;
+    outline: none;
+    cursor: pointer;
+    margin-inline: 16px;
+  }
+
+  #mins button:hover {
+    color: #0c0c0c;
+  }
+
+  #minsCOn {
+    border-top: #0c0c0c solid 0.5rem;
+    width: 100%;
+    display: flex;
+    padding: 0 48px;
+    justify-content: space-between;
+    background-color: whitesmoke;
+  }
 }
 
 /* Keyframes */
@@ -336,9 +1024,3 @@ body {
 }
 
 /*  */
-
-@media screen and (max-width: 1024px) {
-  .text {
-    font-size: 6rem;
-  }
-}
