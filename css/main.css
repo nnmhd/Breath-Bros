@@ -1081,6 +1081,22 @@ body {
   transform-origin: center;
 }
 
+.inhale {
+  animation: inhalse 6s ease-in-out 3s infinite;
+}
+
+.exhale {
+  animation: exhalse 6s ease-in-out 3s infinite;
+}
+
+.hold {
+  animation: hold 6s ease-in-out 3s infinite;
+}
+
+.holdAfter {
+  animation: holdAfer 6s ease-in-out 3s infinite;
+}
+
 @keyframes inhalse {
   0% {
     transform: scale(0);

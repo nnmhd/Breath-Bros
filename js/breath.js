@@ -68,13 +68,47 @@ class CharBreath extends Breath {
       if (!this.isBreathing || index >= steps.length) return;
       let step = steps[index];
 
-      const stepB = ``;
       console.log(`${this.name} - ${step.phase} for ${step.duration} seconds`);
       if (callback) callback(step.phase, step.duration);
 
       index++;
       if (index >= steps.length) index = 0;
       setTimeout(nextStep, step.duration * 1000);
+
+      const body = document.querySelector("#body");
+      const face = document.querySelector("#face");
+      switch (step.phase) {
+        case "inhale":
+          body.setAttribute("class", "st0");
+          body.classList.add("inhale");
+          face.classList = [];
+          face.classList.add("inhaleF");
+          console.log("Inhale");
+          break;
+        case "hold":
+          body.setAttribute("class", "st0");
+          body.classList.add("hold");
+          face.classList = [];
+          face.classList.add("holdF");
+          console.log("Hold");
+          break;
+        case "exhale":
+          body.setAttribute("class", "st0");
+          body.classList.add("exhale");
+          face.classList = [];
+          face.classList.add("exhale");
+          console.log("Exhale");
+          break;
+        case "holdAfterExhale":
+          body.setAttribute("class", "st0");
+          body.classList.add("holdAfter");
+          face.classList = [];
+          face.classList.add("holdAfterF");
+          console.log("Hold After Exhale");
+          break;
+        default:
+          console.log("Error");
+      }
     };
     console.log(steps);
     nextStep();
