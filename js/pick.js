@@ -16,7 +16,6 @@ export function pick() {
     e.addEventListener("click", () => {
       const face = document.querySelector("#face");
       face.classList = [];
-      console.log(e);
       const P = e.dataset.char;
 
       const charData = breathData[P];
@@ -37,7 +36,6 @@ export function playBreath() {
     document.querySelectorAll("#modeName ul li").forEach((e) => {
       e.addEventListener("click", () => {
         const selectedChar = e.dataset.char;
-        console.log("Selected:", selectedChar);
         const charData = breathData[selectedChar];
         resolve(charData);
       });
@@ -46,18 +44,85 @@ export function playBreath() {
 }
 
 export function startPractice() {
-  playBreath().then((charData) => {
-    console.log(`${charData.charName} is ready to play`);
-    document.querySelector("#controller").addEventListener("click", () => {
-      if (charData.isBreathing) {
-        console.log("Test: Stopping", charData.charName);
-        charData.stopBreathing();
+  const button = document.querySelector("#playStop");
+  const controller = document.querySelector("#controller");
+  const timer = document.querySelector("#custom-number");
+  let charData = null;
+  let breathingTimeout = null;
+
+  function getTimerValue() {
+    return parseInt(timer.value, 10) || 1;
+  }
+
+  timer.addEventListener("input", () => {
+    console.log(`Timer updated: ${getTimerValue()} minute(s)`);
+  });
+
+  playBreath()
+    .then((data) => {
+      if (!data || !data.charName) {
+        console.warn("Pick Mode First!");
+        alert("Pick Mode First!");
         return;
-      } else {
-        console.log("Test: Playing", charData.charName);
-        charData.moveMent();
-        charData.startBreathing();
       }
+
+      charData = data;
+      console.log(`${charData.charName} is ready to play`);
+    })
+    .catch((error) => {
+      console.error("Pick Mode First!", error);
+      alert("Pick Mode First!");
     });
+
+  controller.addEventListener("click", () => {
+    if (!charData) {
+      console.warn("Please Pick Mode First!");
+      alert("Please Pick Mode First!");
+      return;
+    }
+
+    const currentTimerValue = getTimerValue();
+    console.log(`Current timer value: ${currentTimerValue} minute(s)`);
+
+    // ! Timer Animation
+    const timerBox = document.querySelector("#timer");
+    const timerLeft = document.querySelector(".timer");
+
+    if (!timerLeft) {
+      console.warn("Timer element not found!");
+      return;
+    }
+
+    timerLeft.style.animation = `timer ${currentTimerValue * 60000}ms linear`;
+    timerBox.classList.add("timer");
+
+    if (breathingTimeout) {
+      clearTimeout(breathingTimeout);
+    }
+
+    if (charData.isBreathing) {
+      console.log("Test: Stopping", charData.charName);
+      button.textContent = "S";
+      button.style.width = "100%";
+      button.style.height = "100%";
+      button.style.fontSize = "10rem";
+      charData.stopBreathing();
+      window.location.reload();
+    } else {
+      console.log("Test: Playing", charData.charName);
+      button.textContent = "P";
+      button.style.width = "345px";
+      // button.style.height = "345px";
+      button.style.fontSize = "10.5rem";
+      charData.moveMent();
+      charData.startBreathing();
+
+      breathingTimeout = setTimeout(() => {
+        console.log("⏳ Timer ended. Stopping breathing...");
+        button.textContent = "S";
+        charData.stopBreathing();
+        window.location.reload();
+      }, currentTimerValue * 60000);
+    }
   });
 }
