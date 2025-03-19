@@ -63,55 +63,105 @@ class CharBreath extends Breath {
     let steps = this.getSteps();
     let index = 0;
     this.isBreathing = true;
+    let stepStartTime = null;
+    let currentStepDuration = 0;
 
-    const nextStep = () => {
-      if (!this.isBreathing || index >= steps.length) return;
-      let step = steps[index];
+    const body = document.querySelector("#body");
+    const face = document.querySelector("#face");
+    const text = document.querySelector("#breathingStep");
 
-      console.log(`${this.name} - ${step.phase} for ${step.duration} seconds`);
-      if (callback) callback(step.phase, step.duration);
+    const animate = (currentTime) => {
+      if (!this.isBreathing) return;
 
-      index++;
-      if (index >= steps.length) index = 0;
-      setTimeout(nextStep, step.duration * 1000);
+      if (stepStartTime === null) {
+        stepStartTime = currentTime;
+        currentStepDuration = steps[index].duration;
+        updateUI(steps[index]);
+      }
 
-      const body = document.querySelector("#body");
-      const face = document.querySelector("#face");
+      const elapsed = (currentTime - stepStartTime) / 1000;
+
+      if (elapsed >= currentStepDuration) {
+        console.log(
+          `${this.name} - ${steps[index].phase} for ${currentStepDuration} seconds`
+        );
+        if (callback) callback(steps[index].phase, currentStepDuration);
+
+        index = (index + 1) % steps.length;
+
+        while (steps[index].duration === 0) {
+          index = (index + 1) % steps.length;
+        }
+
+        stepStartTime = currentTime;
+        currentStepDuration = steps[index].duration;
+        updateUI(steps[index]);
+      }
+
+      requestAnimationFrame(animate);
+    };
+
+    function updateUI(step) {
       switch (step.phase) {
         case "inhale":
-          body.setAttribute("class", "st0");
-          body.classList.add("inhale");
-          face.classList = [];
-          face.classList.add("inhaleF");
+          body.setAttribute(
+            "style",
+            `animation: inhale ${step.duration}s ease`
+          );
+          text.textContent = [];
+          text.textContent = step.phase;
+          if (this === "triangleChar") {
+            face.setAttribute("class", "pos");
+          } else {
+            face.setAttribute("class", "");
+          }
+
           console.log("Inhale");
           break;
         case "hold":
-          body.setAttribute("class", "st0");
-          body.classList.add("hold");
-          face.classList = [];
-          face.classList.add("holdF");
+          body.setAttribute("style", `animation: hold ${step.duration}s ease`);
+          text.textContent = [];
+          text.textContent = step.phase;
+          if (this === "triangleChar") {
+            face.setAttribute("class", "pos");
+          } else {
+            face.setAttribute("class", "");
+          }
           console.log("Hold");
           break;
         case "exhale":
-          body.setAttribute("class", "st0");
-          body.classList.add("exhale");
-          face.classList = [];
-          face.classList.add("exhale");
+          body.setAttribute(
+            "style",
+            `animation: exhale ${step.duration}s ease`
+          );
+          text.textContent = [];
+          text.textContent = step.phase;
+          if (this === "triangleChar") {
+            face.setAttribute("class", "pos");
+          } else {
+            face.setAttribute("class", "");
+          }
           console.log("Exhale");
           break;
         case "holdAfterExhale":
-          body.setAttribute("class", "st0");
-          body.classList.add("holdAfter");
-          face.classList = [];
-          face.classList.add("holdAfterF");
+          body.setAttribute(
+            "style",
+            `animation: holdAfter ${step.duration}s ease`
+          );
+          text.textContent = [];
+          text.textContent = step.phase;
+          if (this === "triangleChar") {
+            face.setAttribute("class", "pos");
+          } else {
+            face.setAttribute("class", "");
+          }
           console.log("Hold After Exhale");
           break;
-        default:
-          console.log("Error");
       }
-    };
-    console.log(steps);
-    nextStep();
+    }
+
+    console.log("Steps:", steps);
+    requestAnimationFrame(animate);
   }
 
   stopBreathing() {
