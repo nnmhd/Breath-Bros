@@ -4,28 +4,23 @@ import { breathBrosData } from "./calling.js";
 export function pick() {
   const modeCon = document.querySelector("#modeName");
   const charBody = document.querySelector("#char path");
+  const logo = document.querySelector(".logo");
+  const breathData = breathBrosData();
+
   modeCon.addEventListener("click", () => {
     document.querySelector("#modeName ul").classList.toggle("show");
   });
 
-  // !call the data //
-  const breathData = breathBrosData();
-
   const modelist = document.querySelectorAll("#modeName ul li");
-  Array.from(modelist).forEach((e) => {
-    e.addEventListener("click", () => {
+  modelist.forEach((item) => {
+    item.addEventListener("click", () => {
       const face = document.querySelector("#face");
+      const charData = breathData[item.dataset.char];
+
       face.classList = [];
-      const P = e.dataset.char;
-
-      const charData = breathData[P];
       charBody.setAttribute("d", charData.body);
-      charBody.setAttribute("class", `st0`);
       charBody.setAttribute("class", `st0 ${charData.standby}`);
-
-      if (P === "triangleChar") {
-        face.classList.add("pos");
-      }
+      logo.classList.add("ready");
     });
   });
 }
@@ -33,9 +28,12 @@ export function pick() {
 export function playBreath() {
   return new Promise((resolve) => {
     const breathData = breathBrosData();
-    document.querySelectorAll("#modeName ul li").forEach((e) => {
-      e.addEventListener("click", () => {
-        const selectedChar = e.dataset.char;
+    const modelist = document.querySelectorAll("#modeName ul li");
+
+    modelist.forEach((item) => {
+      item.addEventListener("click", () => {
+        document.querySelector("#modeName p").textContent = item.textContent;
+        const selectedChar = item.dataset.char;
         const charData = breathData[selectedChar];
         resolve(charData);
       });
@@ -50,9 +48,7 @@ export function startPractice() {
   let charData = null;
   let breathingTimeout = null;
 
-  function getTimerValue() {
-    return parseInt(timer.value, 10) || 1;
-  }
+  const getTimerValue = () => parseInt(timer.value, 10) || 1;
 
   timer.addEventListener("input", () => {
     console.log(`Timer updated: ${getTimerValue()} minute(s)`);
@@ -65,7 +61,6 @@ export function startPractice() {
         alert("Pick Mode First!");
         return;
       }
-
       charData = data;
       console.log(`${charData.charName} is ready to play`);
     })
@@ -82,9 +77,6 @@ export function startPractice() {
     }
 
     const currentTimerValue = getTimerValue();
-    console.log(`Current timer value: ${currentTimerValue} minute(s)`);
-
-    // ! Timer Animation
     const timerBox = document.querySelector("#timer");
     const timerLeft = document.querySelector(".timer");
 
@@ -93,6 +85,7 @@ export function startPractice() {
       return;
     }
 
+    console.log(`Current timer value: ${currentTimerValue} minute(s)`);
     timerLeft.style.animation = `timer ${currentTimerValue * 60000}ms linear`;
     timerBox.classList.add("timer");
 
@@ -102,27 +95,34 @@ export function startPractice() {
 
     if (charData.isBreathing) {
       console.log("Test: Stopping", charData.charName);
-      button.textContent = "S";
-      button.style.width = "100%";
-      button.style.height = "100%";
-      button.style.fontSize = "10rem";
-      charData.stopBreathing();
-      window.location.reload();
+      stopBreathing(button, charData);
     } else {
-      console.log("Test: Playing", charData.charName);
-      button.textContent = "P";
-      button.style.width = "345px";
-      // button.style.height = "345px";
-      button.style.fontSize = "10.5rem";
-      charData.moveMent();
-      charData.startBreathing();
-
-      breathingTimeout = setTimeout(() => {
-        console.log("⏳ Timer ended. Stopping breathing...");
-        button.textContent = "S";
-        charData.stopBreathing();
-        window.location.reload();
-      }, currentTimerValue * 60000);
+      console.log("Test: Starting", charData.charName);
+      startBreathing(button, charData, currentTimerValue);
     }
   });
+
+  function startBreathing(button, charData, timerValue) {
+    button.textContent = "P";
+    button.style.width = "345px";
+    button.style.fontSize = "10.5rem";
+
+    charData.moveMent();
+    charData.startBreathing();
+
+    breathingTimeout = setTimeout(() => {
+      console.log("⏳ Timer ended. Stopping breathing...");
+      stopBreathing(button, charData);
+    }, timerValue * 60000);
+  }
+
+  function stopBreathing(button, charData) {
+    button.textContent = "S";
+    button.style.width = "100%";
+    button.style.height = "100%";
+    button.style.fontSize = "10rem";
+
+    charData.stopBreathing();
+    window.location.reload();
+  }
 }

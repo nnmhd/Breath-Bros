@@ -1,4 +1,4 @@
-import { Breath, CharBreath, GuidedBreath } from "./breath.js";
+import { Breath, CharBreath } from "./breath.js";
 
 export function breathBrosData() {
   const BoxBreathing = new Breath("Box Breathing", 4, 4, 4, 0);
@@ -20,7 +20,7 @@ export function breathBrosData() {
     "bloom",
     "spinning",
     "triangleChar.svg",
-    "M512 0 L73.2 768 L950.8 768 Z"
+    "M896,384c0-35.5-72.2-66.7-180.6-84.2,64.3-89.1,93.3-162.2,68.2-187.3s-98.2,3.9-187.3,68.2C578.7,72.2,547.5,0,512,0s-66.7,72.2-84.2,180.6c-89.1-64.3-162.2-93.3-187.3-68.2s3.9,98.2,68.2,187.3c-108.5,17.5-180.6,48.7-180.6,84.2s72.2,66.7,180.6,84.2c-64.3,89.1-93.3,162.2-68.2,187.3s98.2-3.9,187.3-68.2c17.5,108.5,48.7,180.6,84.2,180.6s66.7-72.2,84.2-180.6c89.1,64.3,162.2,93.3,187.3,68.2s-3.9-98.2-68.2-187.3c108.5-17.5,180.6-48.7,180.6-84.2Z"
   );
   const heartChar = new CharBreath(
     "Heart",

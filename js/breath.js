@@ -12,7 +12,7 @@ class Breath {
       { phase: "inhale", duration: this.inhale },
       { phase: "hold", duration: this.hold },
       { phase: "exhale", duration: this.exhale },
-      { phase: "holdAfterExhale", duration: this.holdAfterExhale },
+      { phase: "hold...", duration: this.holdAfterExhale },
     ];
   }
 
@@ -23,8 +23,8 @@ class Breath {
 
     const nextStep = () => {
       if (!this.isBreathing || index >= steps.length) return;
-      let step = steps[index];
 
+      let step = steps[index];
       console.log(`${this.name} - ${step.phase} for ${step.duration} seconds`);
       if (callback) callback(step.phase, step.duration);
 
@@ -32,6 +32,7 @@ class Breath {
       if (index >= steps.length) index = 0;
       setTimeout(nextStep, step.duration * 1000);
     };
+
     console.log(steps);
     nextStep();
   }
@@ -66,9 +67,16 @@ class CharBreath extends Breath {
     let stepStartTime = null;
     let currentStepDuration = 0;
 
-    const body = document.querySelector("#body");
-    const face = document.querySelector("#face");
-    const text = document.querySelector("#breathingStep");
+    const elements = {
+      body: document.querySelector("#body"),
+      face: document.querySelector("#face"),
+      text: document.querySelector("#breathingStep"),
+      Tbreath: document.querySelector(".Tbreath"),
+      logo: document.querySelector("#logo"),
+      logoFace: document.querySelector("#logo g rect"),
+      logoMouth: document.querySelector("#logo-mouth"),
+      logoBody: document.querySelector("#logo-body"),
+    };
 
     const animate = (currentTime) => {
       if (!this.isBreathing) return;
@@ -88,7 +96,6 @@ class CharBreath extends Breath {
         if (callback) callback(steps[index].phase, currentStepDuration);
 
         index = (index + 1) % steps.length;
-
         while (steps[index].duration === 0) {
           index = (index + 1) % steps.length;
         }
@@ -101,66 +108,22 @@ class CharBreath extends Breath {
       requestAnimationFrame(animate);
     };
 
-    function updateUI(step) {
-      switch (step.phase) {
-        case "inhale":
-          body.setAttribute(
-            "style",
-            `animation: inhale ${step.duration}s ease`
-          );
-          text.textContent = [];
-          text.textContent = step.phase;
-          if (this === "triangleChar") {
-            face.setAttribute("class", "pos");
-          } else {
-            face.setAttribute("class", "");
-          }
+    const updateUI = (step) => {
+      const { phase, duration } = step;
+      const animationStyle = `animation: ${phase} ${duration}s ease-in-out`;
+      const faceAnimationStyle = `animation: face_${phase} ${duration}s ease-in-out`;
+      const logoAnimationStyle = `animation: logo_${phase} ${duration}s cubic-bezier(0.65, 0.05, 0.36, 1)`;
+      const textAnimationStyle = `animation: T${phase} ${duration}s ease-in-out`;
 
-          console.log("Inhale");
-          break;
-        case "hold":
-          body.setAttribute("style", `animation: hold ${step.duration}s ease`);
-          text.textContent = [];
-          text.textContent = step.phase;
-          if (this === "triangleChar") {
-            face.setAttribute("class", "pos");
-          } else {
-            face.setAttribute("class", "");
-          }
-          console.log("Hold");
-          break;
-        case "exhale":
-          body.setAttribute(
-            "style",
-            `animation: exhale ${step.duration}s ease`
-          );
-          text.textContent = [];
-          text.textContent = step.phase;
-          if (this === "triangleChar") {
-            face.setAttribute("class", "pos");
-          } else {
-            face.setAttribute("class", "");
-          }
-          console.log("Exhale");
-          break;
-        case "holdAfterExhale":
-          body.setAttribute(
-            "style",
-            `animation: holdAfter ${step.duration}s ease`
-          );
-          text.textContent = [];
-          text.textContent = step.phase;
-          if (this === "triangleChar") {
-            face.setAttribute("class", "pos");
-          } else {
-            face.setAttribute("class", "");
-          }
-          console.log("Hold After Exhale");
-          break;
-      }
-    }
+      elements.body.setAttribute("style", animationStyle);
+      elements.face.setAttribute("style", faceAnimationStyle);
+      elements.logo.setAttribute("style", logoAnimationStyle);
+      elements.text.textContent = phase;
+      elements.Tbreath.setAttribute("style", textAnimationStyle);
 
-    console.log("Steps:", steps);
+      console.log(phase.charAt(0).toUpperCase() + phase.slice(1));
+    };
+
     requestAnimationFrame(animate);
   }
 
@@ -172,16 +135,8 @@ class CharBreath extends Breath {
   moveMent() {
     const charBody = document.querySelector("#char path");
     charBody.setAttribute("class", "st0");
-    charBody.classList.add(`${this.move}`);
-    console.log(`The ${this.charName} is ${this.move}`);
+    charBody.classList.add(this.move);
   }
 }
 
-class GuidedBreath extends Breath {
-  constructor(inhale, hold, exhale, holdAfterExhale) {
-    super(inhale, hold, exhale, holdAfterExhale);
-  }
-  showGuide() {}
-}
-
-export { Breath, CharBreath, GuidedBreath };
+export { Breath, CharBreath };

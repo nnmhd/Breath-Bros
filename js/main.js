@@ -2,7 +2,6 @@ import { playPause } from "./playPause.js";
 import { hover } from "./hover.js";
 import { minsCon } from "./minscontroller.js";
 import { pick, playBreath, startPractice } from "./pick.js";
-import { breathBrosData } from "./calling.js";
 
 hover();
 playPause();
@@ -10,9 +9,6 @@ minsCon();
 pick();
 playBreath();
 startPractice();
-
-const { cloudChar, triangleChar, circleChar, heartChar } = breathBrosData();
-// heartChar.startBreathing();
 
 const logo = document.querySelector("#logo");
 const logoFace = document.querySelector("#logo-eyes");
