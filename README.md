@@ -1,10 +1,10 @@
-# Breath Bros. Practicing Site; CSS & JavaScript
+# Breath Bros. Practicing Site; Object-Oriented Programming (OOP)
 
 ## About
 
-Practice makes perfect! let's breathe with Breath Bros!
+Practice makes perfect! Let's breathe with Breath Bros!
 
-This site is Fanshawe College, IDP student's CSS & JavaScript assignment.
+This site is Fanshawe College, IDP student's Object-Oriented Programming (OOP) assignment.
 
 ## Features
 
@@ -16,40 +16,34 @@ This site is Fanshawe College, IDP student's CSS & JavaScript assignment.
 
 - HTML
 
-- CSS & JavaScript duo!
+- CSS
+
+- JavaScript (OOP principles)
 
 ## Installation
 
 1. Clone the repository:
 
 ```bash
-
-git clone https://github.com/nnmhd/Mahaittidon_Natchanon_CSS-Animation-CSS-JavaScript.git
-
+git clone https://github.com/nnmhd/Mahaittidon_Natchanon_OOP.git
 ```
 
 2. Navigate to the project directory:
 
 ```bash
-
-cd Mahaittidon_Natchanon_CSS-Animation-CSS-JavaScript
-
+cd Mahaittidon_Natchanon_OOP
 ```
 
 3. Install dependencies:
 
 ```bash
-
 npm install
-
 ```
 
 4. Start the development server:
 
 ```bash
-
 npm start
-
 ```
 
 ## Contributor
@@ -59,6 +53,7 @@ Natchanon Nate Mahaittidon
 ## History
 
 Created 5 August 2024
+Updated Mar 2025
 
 ## License
 
