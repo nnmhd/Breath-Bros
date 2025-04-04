@@ -25,7 +25,7 @@ This site is Fanshawe College, IDP student's Object-Oriented Programming (OOP) a
 1. Clone the repository:
 
 ```bash
-git clone https://github.com/nnmhd/Mahaittidon_Natchanon_OOP.git
+git clone https://github.com/nnmhd/breath-bros.git
 ```
 
 2. Navigate to the project directory:
